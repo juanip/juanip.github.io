@@ -234,7 +234,7 @@ function analyzeCurrentGeneration(){
 	for(i=0,j=9;i<POPULATION;i++,j--){
 		chromosomeAux[i] = chromosome[orderRouletteIndex[j]];
 	}
-	alert(chromosomeAux);
+	//alert(chromosomeAux);
 	//guardar chromosomeAux en chromosome, matar los que sobran, dejar la ruleta de 100 lugares
 	//ser feliz
 
