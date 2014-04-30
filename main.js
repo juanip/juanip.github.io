@@ -69,6 +69,7 @@ function btnNext(){
 	else{
 		document.getElementById("next").disabled = true;
 		document.getElementById("finish").disabled = true;	
+		document.getElementById("data").style.display = "block";
 	}
 }
 
@@ -83,6 +84,8 @@ function btnFinish(){
 	updateBestChromosomeInfo();
 	document.getElementById("next").disabled = true;
 	document.getElementById("finish").disabled = true;	
+	document.getElementById("data").style.display = "block";
+
 }
 
 function btnStop(){
@@ -98,6 +101,11 @@ function btnStop(){
 	document.getElementById("text-current-generation").innerHTML = "Generaci&oacute;n: -";
 	document.getElementById("text-current-average").innerHTML = "Promedio F. Objetivo: -";
 	document.getElementById("text-current-max").innerHTML = "Valor: -";
+	document.getElementById("text-best-generation").innerHTML = "Generaci&oacute;n: -";
+	document.getElementById("text-best-objetive").innerHTML = "Promedio F. Objetivo: -";
+	document.getElementById("text-best-decimal").innerHTML = "Valor: -";
+	document.getElementById("data").style.display = "none";
+
 
 	cleanCurrentGenerationTable();
 }
@@ -138,6 +146,7 @@ function generateInitialPOPULATION(){
 
 function analyzeCurrentGeneration(){
 	fObjectiveSum = 0;
+	minFObjective = 1;
 
 	for(i=0;i<POPULATION;i++){
 		currentObjective[i] = 0;
@@ -148,6 +157,13 @@ function analyzeCurrentGeneration(){
 	for(index=0;index<POPULATION;index++){
 		decimal = binToDec(chromosome[index]);
 		currentObjective[index] = calculatefObjective(decimal);
+	}
+
+	//funcion objetivo mas baja
+	for(i=0;i<POPULATION;i++){
+		if(currentObjective[i]<minFObjective){
+			minFObjective = currentObjective[i];
+		}
 	}
 
 	//suma las funciones objetivo
@@ -183,9 +199,46 @@ function analyzeCurrentGeneration(){
 		bestChromosome[3] = bestCurrentChromosome[3];
 	}
 
+	sumRoulette = 0;
 	for(i=0;i<POPULATION;i++){
-		currentRoulette[i] = Math.round(currentFitness[i] * 100);
+		currentRoulette[i] = Math.ceil(currentFitness[i] * 100);
+		if(currentRoulette[i]===0) currentRoulette[i] = 1;
+		sumRoulette += currentRoulette[i];
 	}
+
+	massacre = sumRoulette - 100;
+
+	orderRoulette = new Array(POPULATION);
+	orderRouletteIndex = new Array(POPULATION);
+	for(i=0;i<POPULATION;i++){
+		orderRoulette[i] = currentRoulette[i];
+		orderRouletteIndex[i] = i;
+	}
+
+	aux = 0;
+	auxIndex = 0;
+	for(i=1;i<POPULATION-1;i++){
+		for(j=0;j<POPULATION;j++){
+			if(orderRoulette[j]>orderRoulette[j+1]){
+				aux = orderRoulette[j];
+				orderRoulette[j] = orderRoulette[j+1];
+				orderRoulette[j+1] = aux;
+				auxIndex = j;
+				orderRouletteIndex[j] = j+1;
+				orderRouletteIndex[j+1] = auxIndex;
+			}
+		}
+	}
+
+	chromosomeAux = new Array(POPULATION);
+	for(i=0,j=9;i<POPULATION;i++,j--){
+		chromosomeAux[i] = chromosome[orderRouletteIndex[j]];
+	}
+	alert(chromosomeAux);
+	//guardar chromosomeAux en chromosome, matar los que sobran, dejar la ruleta de 100 lugares
+	//ser feliz
+
+	populateDataTable(currentCycle, bestCurrentChromosome[1], minFObjective, fObjectiveSum/POPULATION);
 }
 
 function populateCurrentGenerationTable(){
@@ -332,4 +385,26 @@ function doMutate(childChromosome){
 	
 	childChromosome[randomGEN] = childChromosome[randomGEN] === "1" ? "0" : "1";
 	return childChromosome;
+}
+
+function populateDataTable(gen, maxFObj, minFObj, promFObj){
+	table = document.getElementById("data-table");
+	td = new Array(4);
+	
+	for(i=0;i<4;i++){	
+		td[i] = document.createElement("td");
+	}
+	
+	td[0].innerText = gen+1;
+	td[1].innerText = maxFObj.toFixed(6);
+	td[2].innerText = minFObj.toFixed(6);
+	td[3].innerText = promFObj.toFixed(6);
+
+	tr = document.createElement("tr");
+	
+	for(i=0;i<4;i++){
+		tr.appendChild(td[i]);	
+	}
+
+	table.appendChild(tr);
 }

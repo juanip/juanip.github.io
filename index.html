@@ -4,6 +4,7 @@
 	<title>Algor&iacute;tmos Gen&eacute;ticos</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="excel/excellentexport.min.js"></script>
 </head>
 <body onload="main()">
 	<header>
@@ -57,22 +58,16 @@
 		</table>
 	</div>
 
-	<div class="data">
-		<table>
+	<div class="data" id="data">
+		<h2>An&aacute;lisis por Generaci&oacute;n (<a download="analisis.xls" href="#" onclick="return ExcellentExport.excel(this, 'data-table', 'analisis');">Exportar</a>)</h2>
+		<table id="data-table">
 			<tr>
-				<th>Generaci&oacute;n</th>
-			</tr>
-			<tr>
-				<th>M&aacute;x. F. Objetivo</th>
-			</tr>
-			<tr>
-				<th>M&iacute;n. F. Objetivo</th>
-			</tr>
-			<tr>
+				<th>Generacion</th>
+				<th>Max. F. Objetivo</th>
+				<th>Min. F. Objetivo</th>
 				<th>Prom. F. Objetivo</th>
 			</tr>
 		</table>
-		<button id="export-to-excel">Exportar a Excel</button>
 	</div>
 
 	<footer>
@@ -80,4 +75,3 @@
 	</footer>
 </body>
 </html>
-

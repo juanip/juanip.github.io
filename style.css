@@ -116,7 +116,7 @@ h2 {
 	width:			90%;
 	text-align:		center;
 }
-.data th, .current-generation td, .current-generation tr {
+.data th, .data td, .data tr {
 	border:			solid 1px black;
 }
 
