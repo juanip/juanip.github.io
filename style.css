@@ -107,7 +107,7 @@ h2 {
 	border:			solid 1px black;
 }
 .current-generation th {
-	background: 		#EEEEEE;
+	background-color:	#DDDDDD;
 }
 
 .data {
@@ -122,7 +122,7 @@ h2 {
 	border:			solid 1px black;
 }
 .data th {
-	background: 		#EEEEEE;
+	background-color:	#DDDDDD;
 }
 
 
