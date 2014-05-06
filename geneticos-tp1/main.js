@@ -1,4 +1,4 @@
-var POPULATION = 10;
+var POBLACION = 10;
 var GENES = 30;
 var COEF = Math.pow(2,30)-1;
 //precalculated powers of 2
@@ -9,12 +9,12 @@ var mutation;
 var cycles;
 var currentCycle;
 
-var chromosome = new Array(POPULATION);
+var chromosome = new Array(POBLACION);
 
 // currentX[x] [x]>>chromosome
-var currentObjective = new Array(POPULATION);
-var currentFitness = new Array(POPULATION);
-var currentRoulette = new Array(POPULATION);
+var currentObjective = new Array(POBLACION);
+var currentFitness = new Array(POBLACION);
+var currentRoulette = new Array(POBLACION);
 
 // bestChromosome: [0]>>generation [1]>>fObjective [2]>>fFitness [3]>>dec [4]>>bin
 var bestChromosome = new Array(5);
@@ -43,8 +43,9 @@ function btnPlay(){
 	document.getElementById("cycles").disabled = true;
 	
 	initializeVars();
-	generateInitialPOPULATION();
+	generateInitialPOBLACION();
 	analyzeCurrentGeneration();
+	populateDataTable(currentCycle, bestCurrentChromosome[1], minFObjective, fObjectiveSum/POBLACION);
 	populateCurrentGenerationTable();
 	updateCurrentBestChromosomeInfo();
 	updateBestChromosomeInfo();
@@ -56,6 +57,9 @@ function btnNext(){
 		cleanCurrentGenerationTable();
 		generateNewGeneration();
 		analyzeCurrentGeneration();
+		if((currentCycle % Math.floor(cycles/20)) == 0) {
+			populateDataTable(currentCycle, bestCurrentChromosome[1], minFObjective, fObjectiveSum/POBLACION);
+		}
 		populateCurrentGenerationTable();
 		updateCurrentBestChromosomeInfo();
 		updateBestChromosomeInfo();
@@ -77,6 +81,9 @@ function btnFinish(){
 	for(;currentCycle<cycles;currentCycle++){
 		generateNewGeneration();
 		analyzeCurrentGeneration();
+		if(((currentCycle+1) % Math.floor(cycles/20)) == 0) {
+			populateDataTable(currentCycle, bestCurrentChromosome[1], minFObjective, fObjectiveSum/POBLACION);
+		}
 	}
 	cleanCurrentGenerationTable();
 	populateCurrentGenerationTable();
@@ -108,11 +115,12 @@ function btnStop(){
 
 
 	cleanCurrentGenerationTable();
+	cleanDataTable();
 }
 
 function initializeVars(){
 	//inicializa arreglo de cromosomas
-	for(i=0;i<POPULATION;i++){
+	for(i=0;i<POBLACION;i++){
 		chromosome[i] = new Array(GENES);
 	}
 
@@ -136,8 +144,8 @@ function initializeVars(){
 	bestChromosome[4] = new Array(GENES);
 }
 
-function generateInitialPOPULATION(){
-	for(i=0;i<POPULATION;i++){
+function generateInitialPOBLACION(){
+	for(i=0;i<POBLACION;i++){
 		for(j=0;j<GENES;j++){
 			chromosome[i][j] = Math.floor((Math.random()*2)) ? '1' : '0';
 		}
@@ -148,31 +156,31 @@ function analyzeCurrentGeneration(){
 	fObjectiveSum = 0;
 	minFObjective = 1;
 
-	for(i=0;i<POPULATION;i++){
+	for(i=0;i<POBLACION;i++){
 		currentObjective[i] = 0;
 		currentFitness[i] = 0;
 	}
 	//guarda la funcion objetivo de todos los cromosomas
 	decimal = 0;
-	for(index=0;index<POPULATION;index++){
+	for(index=0;index<POBLACION;index++){
 		decimal = binToDec(chromosome[index]);
 		currentObjective[index] = calculatefObjective(decimal);
 	}
 
 	//funcion objetivo mas baja
-	for(i=0;i<POPULATION;i++){
+	for(i=0;i<POBLACION;i++){
 		if(currentObjective[i]<minFObjective){
 			minFObjective = currentObjective[i];
 		}
 	}
 
 	//suma las funciones objetivo
-	for(i=0;i<POPULATION;i++){
+	for(i=0;i<POBLACION;i++){
 		fObjectiveSum = fObjectiveSum + currentObjective[i];
 	}
 
 	//calcula el fitness de todos los cromosomas 
-	for(i=0;i<POPULATION;i++){
+	for(i=0;i<POBLACION;i++){
 		currentFitness[i] = currentObjective[i] / fObjectiveSum;
 	}
 
@@ -181,7 +189,7 @@ function analyzeCurrentGeneration(){
 		bestCurrentChromosome[i] = 0;
 	}
 
-	for(index=0;index<POPULATION;index++){
+	for(index=0;index<POBLACION;index++){
 		if(currentObjective[index] > bestCurrentChromosome[1]){
 			bestCurrentChromosome[0] = currentCycle;
 			bestCurrentChromosome[1] = currentObjective[index];
@@ -189,7 +197,7 @@ function analyzeCurrentGeneration(){
 			bestCurrentChromosome[3] = binToDec(chromosome[index]);
 		}
 	}
-	bestCurrentChromosome[4] = fObjectiveSum / POPULATION;
+	bestCurrentChromosome[4] = fObjectiveSum / POBLACION;
 
 	//is this best chromosome the best chromosome of all time?
 	if(bestCurrentChromosome[1] > bestChromosome[1]){
@@ -198,65 +206,22 @@ function analyzeCurrentGeneration(){
 		bestChromosome[2] = bestCurrentChromosome[2];
 		bestChromosome[3] = bestCurrentChromosome[3];
 	}
-
-	sumRoulette = 0;
-	for(i=0;i<POPULATION;i++){
-		currentRoulette[i] = Math.ceil(currentFitness[i] * 100);
-		if(currentRoulette[i]===0) currentRoulette[i] = 1;
-		sumRoulette += currentRoulette[i];
-	}
-
-	massacre = sumRoulette - 100;
-
-	orderRoulette = new Array(POPULATION);
-	orderRouletteIndex = new Array(POPULATION);
-	for(i=0;i<POPULATION;i++){
-		orderRoulette[i] = currentRoulette[i];
-		orderRouletteIndex[i] = i;
-	}
-
-	aux = 0;
-	auxIndex = 0;
-	for(i=1;i<POPULATION-1;i++){
-		for(j=0;j<POPULATION;j++){
-			if(orderRoulette[j]>orderRoulette[j+1]){
-				aux = orderRoulette[j];
-				orderRoulette[j] = orderRoulette[j+1];
-				orderRoulette[j+1] = aux;
-				auxIndex = j;
-				orderRouletteIndex[j] = j+1;
-				orderRouletteIndex[j+1] = auxIndex;
-			}
-		}
-	}
-
-	chromosomeAux = new Array(POPULATION);
-	for(i=0,j=9;i<POPULATION;i++,j--){
-		chromosomeAux[i] = chromosome[orderRouletteIndex[j]];
-	}
-	//alert(chromosomeAux);
-	//guardar chromosomeAux en chromosome, matar los que sobran, dejar la ruleta de 100 lugares
-	//ser feliz
-
-	populateDataTable(currentCycle, bestCurrentChromosome[1], minFObjective, fObjectiveSum/POPULATION);
 }
 
 function populateCurrentGenerationTable(){
 	table = document.getElementById("current-generation-table");
-	td = new Array(4);
-	for(i=0;i<POPULATION;i++){
+	td = new Array(3);
+	for(i=0;i<POBLACION;i++){
 		tr = document.createElement("tr");
 		
-		for(j=0;j<4;j++){
+		for(j=0;j<3;j++){
 			td[j] = document.createElement("td");
 			switch(j){
-				case 0:	td[j].innerText = chromosome[i].toString();
+				case 0:	td[j].innerText = chromosome[i].join(" ");
 						break;
 				case 1:	td[j].innerText = currentObjective[i].toFixed(4);
 						break;
 				case 2:	td[j].innerText = currentFitness[i].toFixed(4);
-						break;
-				case 3:	td[j].innerText = currentRoulette[i];
 						break;
 			}
 
@@ -281,7 +246,15 @@ function updateBestChromosomeInfo(){
 
 function cleanCurrentGenerationTable(){
 	table = document.getElementById("current-generation-table");
-	for(i=1;i<POPULATION+1;i++){
+	for(i=1;i<POBLACION+1;i++){
+		table.deleteRow(1);
+	}
+}
+
+function cleanDataTable(){
+	table = document.getElementById("data-table");
+	trCount = table.getElementsByTagName("tr").length;
+	for(i=1;i<trCount;i++){
 		table.deleteRow(1);
 	}
 }
@@ -303,37 +276,82 @@ function binToDec(chrom){
 }
 
 function generateNewGeneration(){
-	parentsChromosome = new Array(POPULATION);
+	parentsChromosome = new Array(POBLACION);
 	rouletteSum = 0;
 	
-	for(i=0;i<POPULATION;i++){
-		rouletteSum = rouletteSum + currentRoulette[i];
+	for(i=0;i<POBLACION;i++){
+		currentRoulette[i] = Math.ceil(currentFitness[i] * 100);
+		if(currentRoulette[i]===0) currentRoulette[i] = 1;
+		rouletteSum += currentRoulette[i];
 	}
 
-	roulette = new Array(rouletteSum);
+	//ordenar ruleta 
+	//orderRoulette => cant de posiciones
+	//orderRouletteIndex => a que cromosoma corresponde esa cant de posiciones
+	orderRoulette = new Array(POBLACION);
+	orderRouletteIndex = new Array(POBLACION);
+	for(i=0;i<POBLACION;i++){
+		orderRoulette[i] = currentRoulette[i];
+		orderRouletteIndex[i] = i;
+	}
 
-	indexRoulette = 0;
-	for(i=0;i<POPULATION;i++){
-		j = 0;
-		while(j < currentRoulette[i]){
-			roulette[indexRoulette] = i;
-			j++;
-			indexRoulette++;
+	aux = 0;
+	auxIndex = 0;
+	for(i=1;i<POBLACION-1;i++){
+		for(j=0;j<POBLACION;j++){
+			if(orderRoulette[j]>orderRoulette[j+1]){
+				aux = orderRoulette[j];
+				auxIndex = orderRouletteIndex[j];
+				
+				orderRoulette[j] = orderRoulette[j+1];
+				orderRouletteIndex[j] = orderRouletteIndex[j+1];
+				
+				orderRoulette[j+1] = aux;
+				orderRouletteIndex[j+1] = auxIndex;
+			}
 		}
 	}
 
-	for(i=0;i<POPULATION;i++){
+	chromosomeRoulette = new Array(POBLACION);
+	for(i=0,j=9;i<POBLACION;i++,j--){
+		chromosomeRoulette[i] = chromosome[orderRouletteIndex[j]];
+	}
+
+
+	//Rellena ruleta 
+	roulette = new Array();
+	rouletteAux = new Array(rouletteSum);
+
+	indexRoulette = 0;
+	for(i=0;i<POBLACION;i++){
+		j = 0;
+		while(j < orderRoulette[i]){
+			if(indexRoulette>99) break;
+			rouletteAux[indexRoulette] = orderRouletteIndex[i];
+			j++;
+			indexRoulette++;
+		}
+		if(indexRoulette>99) break;
+	}
+
+	//Limpia ruleta de espacios vacios
+	for(i=0;i<rouletteAux.length;i++){
+		if(rouletteAux[i]>=0) roulette[i] = rouletteAux[i];
+	
+	}
+
+	for(i=0;i<POBLACION;i++){
 		parentsChromosome[i] = new Array(GENES);
 	}
 
 	//select parents
-	for(i=0;i<POPULATION;i++){
-		indexRoulette = Math.floor((Math.random()*rouletteSum));
-		parentsChromosome[i] = chromosome[roulette[indexRoulette]];
+	for(i=0;i<POBLACION;i++){
+		indexRoulette = Math.floor((Math.random()*100));
+		parentsChromosome[i] = chromosomeRoulette[roulette[indexRoulette]];
 	}
 
 	//breeding
-	for(indexChrom=0;indexChrom<POPULATION/2;indexChrom++){
+	for(indexChrom=0;indexChrom<POBLACION/2;indexChrom++){
 		//crossover
 		if(Math.floor((Math.random()*100)+1) < crossover){
 			childrenChromosome = doCrossover(parentsChromosome[indexChrom*2],parentsChromosome[indexChrom*2+1]);
