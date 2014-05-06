@@ -120,17 +120,8 @@ h2 {
 }
 .data th, .data td, .data tr {
 	border:			solid 1px black;
-<<<<<<< HEAD:geneticos-tp1/style.css
 }
-=======
-}
+
 .data th {
 	background-color:	#DDDDDD;
 }
-
-
-footer {
-	display:		none;
-}
-
->>>>>>> 660b81441f0706a0c308d6958ca857915eef4096:style.css
