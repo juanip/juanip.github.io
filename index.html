@@ -14,19 +14,19 @@
 		<div class="parameters">
 			<h2>Configuraci&oacute;n Inicial</h2>
 			<label>Crossover: <input type="number" id="crossover" value="75" min="0" max="100"></label>
-			<label>Mutaci&oacute;n: <input type="number" id="mutation" value="5" min="0" max="100"></label>
-			<label>Ciclos: <input type="number" id="cycles" value="20" min="20"></label>
+			<label>Mutaci&oacute;n: <input type="number" id="mutacion" value="5" min="0" max="100"></label>
+			<label>Ciclos: <input type="number" id="ciclos" value="20" min="20"></label>
 		</div>
 
 		<div class="buttons">
 			<h2>Controles</h2>
 			<div class="button-group">
-				<button id="play" onclick="btnPlay()">Play</button>
-				<button id="stop" onclick="btnStop()" disabled>Stop</button>
+				<button id="play" onclick="btnPlay()">Iniciar</button>
+				<button id="stop" onclick="btnStop()" disabled>Terminar</button>
 			</div>
 			<div class="button-group">
-				<button id="next" onclick="btnNext()" disabled>Siguiente</button>
-				<button id="finish" onclick="btnFinish()" disabled>Final</button>
+				<button id="next" onclick="btnNext()" disabled>Pr&oacute;x Gen.</button>
+				<button id="finish" onclick="btnFinish()" disabled>&Uacute;ltima Gen.</button>
 			</div>
 		</div>
 
@@ -48,7 +48,7 @@
 
 	<div class="current-generation" id="current-generation">
 		<h2>Poblaci&oacute;n Actual</h2>
-		<table id="current-generation-table">
+		<table id="tabla-generacion-actual">
 			<tr>
 				<th>Cromosoma</th>
 				<th>Objetivo</th>
@@ -58,8 +58,8 @@
 	</div>
 
 	<div class="data" id="data">
-		<h2>An&aacute;lisis por Generaci&oacute;n (<a download="analisis.xls" href="#" onclick="return ExcellentExport.excel(this, 'data-table', 'analisis');">Exportar</a>)</h2>
-		<table id="data-table">
+		<h2>An&aacute;lisis por Generaci&oacute;n (<a download="analisis.xls" href="#" onclick="return ExcellentExport.excel(this, 'tabla-datos', 'analisis');">Exportar</a>)</h2>
+		<table id="tabla-datos">
 			<tr>
 				<th>Generacion</th>
 				<th>Max. F. Objetivo</th>
