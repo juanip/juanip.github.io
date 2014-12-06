@@ -1,0 +1,35 @@
+.adm-usuario {
+  display: none;
+}
+
+.img-ahorcado {
+  position:absolute;
+  display: none;
+}
+.img-horca {
+  display: block;
+}
+
+.form-control.letra {
+  width: 50px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.controles {
+  margin: 20px auto;
+}
+
+.info-juego {
+  margin: 50px auto;
+  font-size: 1.5em;
+  letter-spacing: 5px;
+  text-align: center;
+}
+
+.alert {
+  text-align: center;
+  width: 70%;
+  margin: 0 auto;
+  display: none;
+}

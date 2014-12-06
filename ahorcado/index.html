@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="bs/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Ahorcado</title>
+</head>
+<body onload="init()" onKeyDown="gui.pulsa_tecla(event)">
+<!-- header -->
+  <header>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <span class="navbar-brand">elAhorcado</span>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span id="nombre-usuario">Anonimo</span>
+                <span id="puntos-usuario" class="badge">0</span>
+              </a> 
+              <ul class="dropdown-menu" role="menu">  
+                <li><a href="#" onclick="gui.adm_usuario()"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Cambiar Nombre</a></li>  
+                <li><a href="#" onclick="gui.borrar_puntos()"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Borrar Puntos</a></li>
+              </ul> 
+            </li> 
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+ </header>
+
+  <section class="container-fluid">
+    
+    <!-- administracion usuario -->
+    <section class="row adm-usuario">
+      <div class="col-xs-4 col-xs-offset-4">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="usuario">Nombre</label>
+              <input type="text" id="usuario" class="form-control" />
+            </div>
+            <button class="btn btn-primary" onclick="gui.cambiar_nombre()">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- area de juego -->
+    <section class="row">
+
+      <!-- controles -->
+      <section class="col-xs-3 col-xs-offset-3">
+
+        <div class="form-inline controles">
+          <input type="text" id="letra" class="form-control letra text-uppercase"/>
+          <button class="btn btn-success" onclick="gui.jugar_letra()">
+            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+          </button>
+          <button class="btn btn-warning" onclick="gui.nuevo_juego()">
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+          </button>
+        </div>
+
+       
+        <ul class="list-group info-juego">
+          <li id="progreso" class="list-group-item text-uppercase">&nbsp;</li>
+          <li id="intentos" class="list-group-item text-uppercase">&nbsp;</li>
+        </ul>  
+      </section>
+
+      <!-- imagen ahorcado -->
+      <section class="col-xs-4">
+        <img src="img/0.png" id="img0" class="img-ahorcado" />
+        <img src="img/1.png" id="img1" class="img-ahorcado" />
+        <img src="img/2.png" id="img2" class="img-ahorcado" />
+        <img src="img/3.png" id="img3" class="img-ahorcado" />
+        <img src="img/4.png" id="img4" class="img-ahorcado" />
+        <img src="img/5.png" id="img5" class="img-ahorcado" />
+        <img src="img/6.png" id="img6" class="img-ahorcado img-horca" />
+      </section>
+    </section>
+
+    <!-- alertas -->
+    <section class="row">
+      <div role="alert" class="alert alert-success alert-dismissible" id="victoria"><button class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>Felicitaciones!</div>
+      <div role="alert" class="alert alert-danger alert-dismissible" id="derrota"><button class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>Upss! Mejor suerte la próxima</div>
+      <div role="alert" class="alert alert-success alert-dismissible" id="alerta-nombre"><button class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>Nombre cambiado!</div>
+      <div role="alert" class="alert alert-success alert-dismissible" id="alerta-puntos"><button class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>Puntos borrados!</div>
+    </section>
+  
+  </section>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="bs/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="main.js"></script>
+<script src="palabras.txt" charset="utf-8" type="text/javascript"></script>
+</body>
+</html>
