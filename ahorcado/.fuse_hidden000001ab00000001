@@ -209,11 +209,11 @@ function GUI(palabras, jugador) {
     this.dibujar_ahorcado(juego.get_vidas());
 
     if(juego.get_vidas() < 1) {
-      this.terminar_juego(false);
+      this.terminar_juego();
     }
 
-    if(juego.get_restantes() < 1) {
-      this.terminar_juego(true);
+    if(juego.get_restantes < 1) {
+      this.terminar_juego();
     }
     
     this.set_intentos(juego.get_intentos());
