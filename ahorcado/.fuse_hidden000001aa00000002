@@ -20,16 +20,11 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 <span id="nombre-usuario">Anonimo</span>
-                <span id="nivel-usuario" class="badge">0</span>
+                <span id="puntos-usuario" class="badge">0</span>
               </a> 
-              <ul class="dropdown-menu" role="menu">
-                <li><a>Puntos: <span id="puntos-usuario">0</span></a></li>
-                <li><a>Partidas: <span id="partidas-usuario">0</span></a></li>
-                <li><a>Aciertos: <span id="aciertos-usuario">0</span></a></li>
-                <li><a>Errores: <span id="errores-usuario">0</span></a></li>
-                <li role="presentation" class="divider"></li>
+              <ul class="dropdown-menu" role="menu">  
                 <li><a href="#" onclick="gui.adm_usuario()"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Cambiar Nombre</a></li>  
-                <li><a href="#" onclick="gui.borrar_datos()"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Borrar Estadísticas</a></li>
+                <li><a href="#" onclick="gui.borrar_puntos()"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Borrar Puntos</a></li>
               </ul> 
             </li> 
           </ul>
@@ -92,38 +87,10 @@
 
     <!-- alertas -->
     <section class="row">
-
-      <!-- alert victoria -->
-      <div role="alert" class="alert alert-success alert-dismissible" id="victoria">
-        <button class="close" data-dismiss="alert">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <span id="puntos-victoria"></span> puntos
-      </div>
-
-      <!-- alert derrota -->
-      <div role="alert" class="alert alert-danger alert-dismissible" id="derrota">
-        <button class="close" data-dismiss="alert">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <span id="puntos-derrota"></span> puntos
-      </div>
-      
-      <!-- alert nombre cambiado -->
-      <div role="alert" class="alert alert-success alert-dismissible" id="alerta-nombre">
-        <button class="close" data-dismiss="alert">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Nombre cambiado.
-      </div>
-      
-      <!-- alert puntos borrados -->
-      <div role="alert" class="alert alert-success alert-dismissible" id="alerta-puntos">
-        <button class="close" data-dismiss="alert">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Estadísticas borradas.
-      </div>
+      <div role="alert" class="alert alert-success alert-dismissible" id="victoria"><button class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>Felicitaciones!</div>
+      <div role="alert" class="alert alert-danger alert-dismissible" id="derrota"><button class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>Upss! Mejor suerte la próxima</div>
+      <div role="alert" class="alert alert-success alert-dismissible" id="alerta-nombre"><button class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>Nombre cambiado!</div>
+      <div role="alert" class="alert alert-success alert-dismissible" id="alerta-puntos"><button class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>Puntos borrados!</div>
     </section>
   
   </section>
