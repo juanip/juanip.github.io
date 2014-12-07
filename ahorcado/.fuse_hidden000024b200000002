@@ -23,26 +23,26 @@ var Jugador = function(datos) {
   var errores = parseInt(datos['errores']);
 
   var tabla_niveles = {
-    '1' :  0,
-    '2' :  100,
-    '3' :  250,
-    '4' :  365,
-    '5' :  574,
-    '6' :  892,
-    '7' :  1389,
-    '8' :  2162,
-    '9' :  3366,
-    '10' : 5240,
-    '11' : 8158,
-    '12' : 12701,
-    '13' : 19774,
-    '14' : 30786,
-    '15' : 47931,
-    '16' : 74624,
-    '17' : 116183,
-    '18' : 180887,
-    '19' : 281626,
-    '20' : 420000
+    '1' : 100,
+    '2' : 250,
+    '3' : 365,
+    '4' : 574,
+    '5' : 892,
+    '6' : 1389,
+    '7' : 2162,
+    '8' : 3366,
+    '9' : 5240,
+    '10' : 8158,
+    '11' : 12701,
+    '12' : 19774,
+    '13' : 30786,
+    '14' : 47931,
+    '15' : 74624,
+    '16' : 116183,
+    '17' : 180887,
+    '18' : 281626,
+    '19' : 438468,
+    '20' : 682658
   };
 
   this.get_puntos = function() {
@@ -90,7 +90,7 @@ var Jugador = function(datos) {
   };
 
   this.set_nivel = function() {
-    if(this.get_puntos() > tabla_niveles[this.get_nivel() + 1]) {
+    if(this.get_puntos() > tabla_niveles[this.get_nivel()]) {
       nivel++;
     }
   };
@@ -98,16 +98,6 @@ var Jugador = function(datos) {
   this.get_nivel = function() {
     return nivel;
   };
-
-  this.get_puntos_proximo_nivel = function() {
-    if(this.get_nivel() == 20) {
-      proximo_nivel = '-';
-    }
-    else {
-      proximo_nivel = tabla_niveles[this.get_nivel() + 1] - this.get_puntos();
-    }
-    return proximo_nivel;
-  }
 
   this.get_datos = function() {
     datos = {};
@@ -239,7 +229,6 @@ function GUI(palabras, jugador) {
 
   var ctrl_nivel_usuario = document.querySelector("#nivel-usuario");
   var ctrl_puntos_usuario = document.querySelector("#puntos-usuario");
-  var ctrl_proximo_nivel = document.querySelector("#proximo-nivel");
   var ctrl_partidas_usuario = document.querySelector("#partidas-usuario");  
   var ctrl_aciertos_usuario = document.querySelector("#aciertos-usuario");  
   var ctrl_errores_usuario = document.querySelector("#errores-usuario");
@@ -247,7 +236,6 @@ function GUI(palabras, jugador) {
   this.actualizar_datos = function() {
     ctrl_nivel_usuario.innerHTML = jugador.get_nivel();
     ctrl_puntos_usuario.innerHTML = jugador.get_puntos();
-    ctrl_proximo_nivel.innerHTML = jugador.get_puntos_proximo_nivel();
     ctrl_partidas_usuario.innerHTML = jugador.get_partidas();
     ctrl_aciertos_usuario.innerHTML = jugador.get_aciertos();
     ctrl_errores_usuario.innerHTML = jugador.get_errores();
