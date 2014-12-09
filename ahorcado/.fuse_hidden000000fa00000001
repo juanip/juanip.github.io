@@ -162,17 +162,15 @@
     </div>
   </div>
 
-
-  <!-- usar en desarrollo, si no cargar solamente main-min.js 
   <script type="text/javascript" src="js/palabras.js"></script>
   <script type="text/javascript" src="js/juego.js"></script>
   <script type="text/javascript" src="js/jugador.js"></script>
   <script type="text/javascript" src="js/gui.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
-  -->
-
-  <script type="text/javascript" src="js/main-min.js"></script>
   
+  <!--
+  <script type="text/javascript" src="js/main-min.js"></script>
+  -->
   <script charset="utf-8" src="palabras.txt" type="text/javascript"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script type="text/javascript" src="bs/js/bootstrap.min.js"></script>

@@ -8,6 +8,8 @@ function GUI(palabras, jugador) {
   var ctrl_letra = document.querySelector("#letra");
   var alert_victoria = document.querySelector("#victoria");
   var alert_derrota = document.querySelector("#derrota");
+  var alert_borrar = document.querySelector('#alerta-borrar');
+  var alert_nombre = document.querySelector('#alerta-nombre');
   var puntos_victoria = document.querySelector("#puntos-victoria"); 
   var puntos_derrota = document.querySelector("#puntos-derrota");
 
@@ -68,11 +70,7 @@ function GUI(palabras, jugador) {
       ctrl_imagenes[i].style.display = "none";
     }
 
-    alert_victoria.style.display = "none";
-    alert_derrota.style.display = "none";
-    document.querySelector('#alerta-nombre').style.display = "none";
-    document.querySelector('#alerta-puntos').style.display = "none";
-
+    this.borrar_alertas();
     ctrl_letra.focus();
   };
 
@@ -100,7 +98,7 @@ function GUI(palabras, jugador) {
 
   this.jugar_letra = function() {
     if(!juego.get_juego_finalizado()) {
-      letra = ctrl_letra.value;      
+      letra = ctrl_letra.value[0];      
   
       resultados = juego.probar_letra(letra);
   
@@ -139,23 +137,22 @@ function GUI(palabras, jugador) {
     }
   };
 
-  this.adm_usuario = function() {
-    document.querySelector('.adm-usuario').style.display = "block";
-    ctrl_usuario.focus();
-  }
+  this.cambiar_nombre = function(accion) {
+    if(accion) {
+      nombre = ctrl_usuario.value;
+      if(nombre != '') {
+        jugador.set_nombre_jugador(nombre);
+        datos_jugador = jugador.get_datos();
+        localStorage.setItem('datos_jugador', JSON.stringify(datos_jugador));
+  
+        ctrl_nombre_usuario.innerHTML = nombre;
+      }
 
-  this.cambiar_nombre = function() {
-    nombre = ctrl_usuario.value;
-    if(nombre != '') {
-      jugador.set_nombre_jugador(nombre);
-      datos_jugador = jugador.get_datos();
-      localStorage.setItem('datos_jugador', JSON.stringify(datos_jugador));
+    this.borrar_alertas();
+    alert_nombre.style.display = "block";
+    }
 
-      ctrl_nombre_usuario.innerHTML = nombre;
-  };
-
-    document.querySelector('.adm-usuario').style.display = "none";
-    document.querySelector('#alerta-nombre').style.display = "block";
+    ctrl_usuario.value = "";
   };
 
   this.borrar_datos = function() {
@@ -170,8 +167,18 @@ function GUI(palabras, jugador) {
     jugador = new Jugador(datos_jugador);
 
     localStorage.setItem('datos_jugador', JSON.stringify(datos_jugador));
-
+  
+    ctrl_nombre_usuario.innerHTML = jugador.get_nombre_jugador();
     this.actualizar_datos();
-    document.querySelector('#alerta-puntos').style.display = "block";
+    
+    this.borrar_alertas();
+    alert_borrar.style.display = "block";
   };
+
+  this.borrar_alertas = function() {
+    alert_victoria.style.display = "none";
+    alert_derrota.style.display = "none";
+    alert_borrar.style.display = "none";
+    alert_nombre.style.display = "none";
+  }
 }

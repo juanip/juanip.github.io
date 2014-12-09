@@ -25,4 +25,7 @@ function init() {
   gui = new GUI(palabras, jugador);
 
   gui.nuevo_juego();
+
+  //inicializar tooltips
+  $('[data-toggle="tooltip"]').tooltip();
 }

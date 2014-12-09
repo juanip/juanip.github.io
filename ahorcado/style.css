@@ -1,5 +1,111 @@
-.adm-usuario {
+body {
+  background-color: #444;
+}
+
+/* navbar */
+.navbar {
+  border-radius: 0px;
+}
+.dropdown-menu {
+  background-color: #111111;
+}
+.dropdown-menu li a{
+  color: #eee;
+}
+
+/* alertas */
+.alertas {
+  min-height: 70px;
+}
+
+.alert {
+  text-align: center;
+  width: 70%;
+  margin: 0 auto;
+  border-radius: 6px;
   display: none;
+}
+
+.alert-success {
+  color: #111;
+  background-color: #ddd;
+  border-color: #111;
+}
+
+.alert-danger {
+  color: #111;
+  background-color: #EE7E3B;
+  border-color: #111;
+}
+
+/* buttons */
+.btn-primary {
+  color: #111;
+  background-color: #777;
+  border-color: #ddd;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #000;
+  border-color: #fff;
+}
+
+.btn-success {
+  color: #111;
+  background-color: #EE6E4B;
+  border-color: #ddd;
+}
+.btn-success:hover,
+.btn-success:focus,
+.btn-success.focus,
+.btn-success:active,
+.btn-success.active,
+.open > .dropdown-toggle.btn-success {
+  color: #000;
+  background-color: #FE5E4B;
+  border-color: #fff;
+}
+
+
+/* badge */
+.badge {
+  background-color: #EE6E4B;
+}
+
+.panel-juego {
+  background-color: #222;
+}
+
+.grupo-control-info {
+  width: 60%;
+  float: left;
+}
+
+.controles {
+  margin: 20px auto;
+}
+
+.form-control.letra {
+  width: 50px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.info-juego {
+  margin: 50px auto;
+  font-size: 1.5em;
+  letter-spacing: 5px;
+  text-align: center;
+}
+
+.grupo-imagenes {
+  width: 30%;
+  float: right;
 }
 
 .img-ahorcado {
@@ -10,26 +116,9 @@
   display: block;
 }
 
-.form-control.letra {
-  width: 50px;
-  font-weight: bold;
-  text-align: center;
+
+
+.form-modal {
+  padding: 10px;
 }
 
-.controles {
-  margin: 20px auto;
-}
-
-.info-juego {
-  margin: 50px auto;
-  font-size: 1.5em;
-  letter-spacing: 5px;
-  text-align: center;
-}
-
-.alert {
-  text-align: center;
-  width: 70%;
-  margin: 0 auto;
-  display: none;
-}
