@@ -7,10 +7,12 @@ function GUI(palabras, jugador) {
   var ctrl_progreso = document.querySelector("#progreso");
   var ctrl_letra = document.querySelector("#letra");
   var alert_victoria = document.querySelector("#victoria");
+  var alert_nivel = document.querySelector("#nivel");
   var alert_derrota = document.querySelector("#derrota");
   var alert_borrar = document.querySelector('#alerta-borrar');
   var alert_nombre = document.querySelector('#alerta-nombre');
-  var puntos_victoria = document.querySelector("#puntos-victoria"); 
+  var puntos_victoria = document.querySelector("#puntos-victoria");
+  var niveles = document.querySelector("#alert-nivel");
   var puntos_derrota = document.querySelector("#puntos-derrota");
 
   var ctrl_nombre_usuario = document.querySelector("#nombre-usuario");
@@ -78,7 +80,7 @@ function GUI(palabras, jugador) {
     puntos = juego.terminar_juego();
     jugador.add_puntos(puntos);
     jugador.sumar_partida();
-    jugador.set_nivel();
+    flag_nivel = jugador.set_nivel();
 
     datos_jugador = jugador.get_datos();
 
@@ -93,6 +95,11 @@ function GUI(palabras, jugador) {
     else {
       puntos_derrota.innerHTML = puntos;
       alert_derrota.style.display = "block";
+    }
+
+    if(flag_nivel) {
+      niveles.innerHTML = jugador.get_nivel();
+      alert_nivel.style.display = "block";
     }
   }
 
@@ -155,6 +162,10 @@ function GUI(palabras, jugador) {
     ctrl_usuario.value = "";
   };
 
+  this.cambiar_nombre_focus = function() {
+    ctrl_usuario.focus();
+  }
+
   this.borrar_datos = function() {
     datos_jugador = {
       'nombre_jugador': 'Anonimo',
@@ -180,5 +191,6 @@ function GUI(palabras, jugador) {
     alert_derrota.style.display = "none";
     alert_borrar.style.display = "none";
     alert_nombre.style.display = "none";
+    alert_nivel.style.display = "none";
   }
 }

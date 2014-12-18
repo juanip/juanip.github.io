@@ -9,7 +9,7 @@ function init() {
   }
   else {
     datos_jugador = {
-      'nombre_jugador': 'Anonimo',
+      'nombre_jugador': 'Cambiar Nombre',
       'nivel' : '1',
       'puntos' : '0',
       'partidas' : '0',

@@ -76,7 +76,9 @@ var Jugador = function(datos) {
   this.set_nivel = function() {
     if(this.get_puntos() > tabla_niveles[this.get_nivel() + 1]) {
       nivel++;
+      return true;
     }
+    return false;
   };
 
   this.get_nivel = function() {
@@ -88,7 +90,7 @@ var Jugador = function(datos) {
       proximo_nivel = '-';
     }
     else {
-      proximo_nivel = tabla_niveles[this.get_nivel() + 1] - this.get_puntos();
+      proximo_nivel = tabla_niveles[this.get_nivel() + 1];
     }
     return proximo_nivel;
   }

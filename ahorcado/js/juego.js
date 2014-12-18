@@ -55,7 +55,8 @@ var Juego = function(palabra) {
         'errores' : 0,
     };
     
-    valida = letra.match(/[A-Z]/i) || letra == "ñ" ? true : false;
+    letra = letra.toLowerCase();
+    valida = letra.match(/[a-zñ]/) ? true : false;
 
     if(valida && intentos.indexOf(letra) == -1 && vidas > 0 && restantes > 0 && !this.get_juego_finalizado()) {
       this.set_intentos(letra);

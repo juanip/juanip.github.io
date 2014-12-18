@@ -6,6 +6,10 @@ body {
 .navbar {
   border-radius: 0px;
 }
+.navbar-brand {
+  padding: 5px 5px;
+}
+
 .dropdown-menu {
   background-color: #111111;
 }
