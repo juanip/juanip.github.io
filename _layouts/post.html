@@ -2,8 +2,17 @@
 layout: default
 ---
 <article>
-  <h2>{{ post.title }}</h2>
+  <h2>{{ page.title }}</h2>
   
-  {{ content }}
+  <section class="metadata">
+    <p class="author">por {{ page.author }}</p>
+    <time>{{ page.date | date_to_string }}</time>
+    <p class="categories">Categories: {{ page.categories }}</p>
+    <p class="tags">Tags: {{ page.tags }}</p>
+  </section>
+
+  <section class="content">
+    {{ content }}
+  </section>
   
 </article>
