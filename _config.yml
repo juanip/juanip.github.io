@@ -6,7 +6,10 @@ defaults:
       type: "posts" 
     values:
       layout: "post"
-permalink: ":year/:month/:title.html"
+      author: "Juani Paccapelo"
+      excerpt_separator: "<!--more-->"
+
+permalink: ":year/:month/:title"
 
 #pagination
 paginate: 10
