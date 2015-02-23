@@ -1,17 +1,14 @@
 ---
 layout: default
-title: My testing blog
+title: Esto es un blog
 ---
-
 <section class="posts">
-  <h2>Recent posts</h2>
+  <h2>Posts recientes</h2>
   <ul>
     {% for post in paginator.posts %}
       <li>
-        <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
-        <section class="metadata">
-          <p class="author">por {{ post.author }}</p>
-          <time>{{ post.date | date_to_string }}</time>
+        <h3><a href="{{ post.url }}">{{ post.fecha }}: {{ post.title }}</a></h3>
+        <section class="excerpt">
           {{ post.excerpt }}
         </section>
       </li>
@@ -19,16 +16,16 @@ title: My testing blog
   </ul>
 </section>
 
-
-<!-- Pagination links -->
+{% if paginator.previous_page or pagination.next_page %}
 <div class="pagination">
   {% if paginator.previous_page %}
-    <a href="{{ paginator.previous_page_path }}" class="previous">Previous</a>
+    <a href="{{ paginator.previous_page_path }}" class="previous">Anterior</a>
   {% endif %}
 
-  <span class="page_number ">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
+  <span class="page_number ">{{ paginator.page }} de {{ paginator.total_pages }}</span>
   
   {% if paginator.next_page %}
-    <a href="{{ paginator.next_page_path }}" class="next">Next</a>
+    <a href="{{ paginator.next_page_path }}" class="next">Siguiente</a>
   {% endif %}
 </div>
+{% endif %}

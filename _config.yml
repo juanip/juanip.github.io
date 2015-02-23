@@ -7,7 +7,7 @@ defaults:
     values:
       layout: "post"
       author: "Juani Paccapelo"
-      excerpt_separator: "<!--more-->"
+      excerpt_separator: <!--more-->
 
 permalink: ":year/:month/:title"
 
