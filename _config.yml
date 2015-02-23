@@ -6,7 +6,7 @@ defaults:
       type: "posts" 
     values:
       layout: "post"
-permalink: ":year/:month/title.html"
+permalink: ":year/:month/:title.html"
 
 #pagination
 paginate: 10
