@@ -1,0 +1,13 @@
+timezone: "America/Argentina/Buenos_Aires"
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts" 
+    values:
+      layout: "post"
+permalink: ":year/:month/title.html"
+
+#pagination
+paginate: 10
+paginate_path: "blog/page:num/"
