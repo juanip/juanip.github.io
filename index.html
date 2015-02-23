@@ -3,6 +3,23 @@ layout: default
 title: My testing blog
 ---
 
+<section class="posts">
+  <h2>Recent posts</h2>
+  <ul>
+    {% for post in paginator.posts %}
+      <li>
+        <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+        <section class="metadata">
+          <p class="author">por {{ page.author }}</p>
+          <time>{{ page.date | date_to_string }}</time>
+          {{ post.excerpt }}
+        </section>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
+
 <!-- This loops through the paginated posts -->
 {% for post in paginator.posts %}
   <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
