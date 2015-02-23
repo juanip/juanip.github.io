@@ -85,6 +85,25 @@ body {
   background-color: #222;
 }
 
+.teclado {
+  background-color: #222;
+  padding: 10px;
+}
+#teclado {
+  display: none;
+}
+
+.btn-group {
+  display: block;
+  clear: both;
+}
+
+.teclado-botones {
+  margin: 0 15%;
+  text-align: center;
+
+}
+
 .grupo-control-info {
   width: 60%;
   float: left;

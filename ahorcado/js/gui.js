@@ -2,6 +2,7 @@ function GUI(palabras, jugador) {
   var palabras = palabras;
   var jugador = jugador;
   var juego;
+  var teclado = false;
 
   var ctrl_intentos = document.querySelector("#intentos");
   var ctrl_progreso = document.querySelector("#progreso");
@@ -24,6 +25,8 @@ function GUI(palabras, jugador) {
   var ctrl_partidas_usuario = document.querySelector("#partidas-usuario");  
   var ctrl_aciertos_usuario = document.querySelector("#aciertos-usuario");  
   var ctrl_errores_usuario = document.querySelector("#errores-usuario");
+
+  var div_teclado = document.querySelector("#teclado");
 
   this.actualizar_datos = function() {
     ctrl_nivel_usuario.innerHTML = jugador.get_nivel();
@@ -73,7 +76,10 @@ function GUI(palabras, jugador) {
     }
 
     this.borrar_alertas();
-    ctrl_letra.focus();
+    
+    if(!teclado) {
+      ctrl_letra.focus();
+    }
   };
 
   this.terminar_juego = function() {
@@ -101,12 +107,10 @@ function GUI(palabras, jugador) {
       niveles.innerHTML = jugador.get_nivel();
       alert_nivel.style.display = "block";
     }
-  }
+  };
 
-  this.jugar_letra = function() {
+  this.jugar = function(letra) {
     if(!juego.get_juego_finalizado()) {
-      letra = ctrl_letra.value[0];      
-  
       resultados = juego.probar_letra(letra);
   
       jugador.sumar_error(resultados['errores']);
@@ -124,14 +128,26 @@ function GUI(palabras, jugador) {
     }
 
     ctrl_letra.value = "";
-    ctrl_letra.focus();
 
+    if(!teclado) {
+      ctrl_letra.focus();
+    }
+  };
+
+  this.jugar_letra = function() {
+    letra = ctrl_letra.value[0];   
+    jugar(letra);   
+  };
+
+  this.letra = function(letra) { 
+    this.jugar(letra);
   };
 
   this.pulsa_tecla = function(tecla) {
     switch(tecla.keyCode){
       //enter
-      case 13: 
+      case 13:
+
         this.jugar_letra(); 
         break;
       //flecha arriba
@@ -193,4 +209,16 @@ function GUI(palabras, jugador) {
     alert_nombre.style.display = "none";
     alert_nivel.style.display = "none";
   }
+
+  this.toggle_teclado = function() {
+    if(teclado) {
+      teclado = false;
+      div_teclado.style.display = "none";
+      ctrl_letra.focus();
+    }
+    else {
+      teclado = true;
+      div_teclado.style.display = "block";
+    }
+  };
 }
