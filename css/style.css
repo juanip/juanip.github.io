@@ -11,6 +11,10 @@ body {
   margin: 0 auto;
 }
 
+a {
+  text-decoration: none;
+}
+
 /* header */
 header {
   margin: 10px auto 50px;
@@ -18,7 +22,6 @@ header {
 }
 header a {
   color: #000000;
-  text-decoration: none;
 }
 
 /* posts list */
@@ -64,7 +67,6 @@ header a {
 .post .content {
   margin: 0 5px;
 }
-
 
 /* footer */
 
