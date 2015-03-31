@@ -1,0 +1,42 @@
+<!doctype HTML>
+<html>
+<head>
+  <title>Canvas</title>
+	<script src="main.js" charset="utf-8" type="text/javascript"></script>
+  <style>
+    #miCanvas {position:absolute;border:2px solid #000000;top:80px;left:40px;display:block}
+    input {margin:5px 0 5px 20px;}
+    #botonera {position:fixed;top:150px;left:580px}
+    #botonera span {display:block}   
+    p {font-size:1.1em}
+    #controles input {width:200px;font-size:1.1em}
+    #botonera label {font-size:1.1em} 
+    #botonera #sl input {width:200px}
+    #botonera #sl p {display:block;margin:0}
+    #botonera #sl {margin:20px 0}
+  </style>
+</head>
+<body onload="dibujar(0)">
+<div id="contenedor" >
+<canvas id="miCanvas" width="500px" height="500px" onclick="clicks(event)"></canvas>
+</div>
+<div id="botonera">
+<div id="cont">
+<p>Generacion: <strong id="gen">0</strong> <input type="button" onclick="resetCont()" value="Reiniciar"></p>
+</div>
+<div id="controles">
+<span>
+<input type="button" onclick="dibujar(1)" value="Aleatorio">
+<input type="button" onclick="dibujar(0)" value="Borrar">
+</span>
+<span>
+<input type="button" onclick="vivir()" value="Siguiente generacion">
+<input id="automatico" type="button" onclick="automatico()" value="Iniciar">
+</span>
+<span id="sl">
+<p><input type="button" value="Generar codigo" onclick="saveCanvas()"> <input type="text" id="saveCode" ></p>
+<p><input type="button" value="Cargar codigo" onclick="loadCanvas()"> <input type="text" id="loadCode" value=""></p>
+</div>
+</div>
+</body>
+</html>
