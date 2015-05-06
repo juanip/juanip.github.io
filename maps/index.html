@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+  <script type="text/javascript" src="gui.js"></script>
+  <script type="text/javascript" src="maps.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <title>Recorrido</title>
+</head>
+<body onload="init()">
+
+<div id="directions">
+  <input type="text" id="origin" placeholder="Origen" />
+  <input type="text" id="destination" placeholder="Destino" />
+  <p> Paradas: </p>
+  <div id="directionsGroup"></div>
+  <button onclick="gui.addInput()"> + </button>
+  <button onclick="gui.submit()"> OK </button>
+</div>
+
+<div id="canvas"></div>
+
+</body>
+</html>

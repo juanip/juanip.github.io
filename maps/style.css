@@ -1,0 +1,14 @@
+#canvas {
+  width: 65%;
+  height: 600px;
+  float:right;
+}
+
+#directions {
+  float: left;
+  width: 30%;
+}
+
+input {
+  display: block;
+}
