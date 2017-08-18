@@ -29,7 +29,7 @@ boardCanvas.height = board.size.y + board.offset.y;
 boardCanvas.width = board.size.x + board.offset.x;
 
 window.setInterval(mainSnake, 1000/60);
-document.addEventListener('keypress', changeDirection);
+document.addEventListener('keydown', changeDirection);
 
 var velocity = window.setInterval(inertiaSnake, board.speed);
 
