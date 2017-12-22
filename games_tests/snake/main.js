@@ -1,17 +1,21 @@
 var board = {
   size: { x: 400, y: 400 },
   offset: { x: 0, y: 20 },
-  boardColor: 'black',
-  scoreBackground: 'white',
-  scoreText: 'black',
-  speed: 200,
-  maxScore: 100
+  color: 'black',
+  score: {
+    background: 'white',
+    color: 'black',
+    font: '15px verdana',
+    record: 1000
+  },
+  speed: 200
 };
 
 var player = {
   size: { x: 20, y: 20 },
   velocity: { x: 0, y: 0 },
-  color: 'green'
+  color: 'green',
+  speed: 20
 };
 
 player.body = [generateRandomPosition(board, player, [])];
@@ -28,35 +32,59 @@ var boardContext = boardCanvas.getContext('2d');
 boardCanvas.height = board.size.y + board.offset.y;
 boardCanvas.width = board.size.x + board.offset.x;
 
-window.setInterval(mainSnake, 1000/60);
+var graphics = new Graphics();
+var physics = new Physics();
+
+window.setInterval(drawGame, 1000/30);
 document.addEventListener('keydown', changeDirection);
 
-var velocity = window.setInterval(inertiaSnake, board.speed);
+var velocity = window.setInterval(main, board.speed);
 
-function mainSnake() {
-  boardContext.fillStyle = board.scoreBackground;
-  boardContext.fillRect(0, 0, board.size.x, board.offset.y);
-
-  boardContext.fillStyle = board.scoreText;
-  boardContext.font = "15px verdana";
-  boardContext.fillText("SCORE: " + getScore(player.body.length), board.size.x * .02, board.offset.y * .75);
-  boardContext.fillText("RECORD: " + board.maxScore, board.size.x * .7, board.offset.y * .75);
-
-  boardContext.fillStyle = board.boardColor;
-  boardContext.clearRect(0 + board.offset.x, 0 + board.offset.y, board.size.x, board.size.y);
-  boardContext.fillRect(0 + board.offset.x, 0 + board.offset.y, board.size.x, board.size.y);
-
-  boardContext.fillStyle = player.color;
-  player.body.forEach(function(dot) {
-    boardContext.fillRect(dot.x + board.offset.x, dot.y + board.offset.y, player.size.x, player.size.y);
-    boardContext.stroke();
-  });
-
-  boardContext.fillStyle = food.color;
-  boardContext.fillRect(food.position.x + board.offset.x, food.position.y + board.offset.y, food.size.x, food.size.y);
+function drawGame() {
+  graphics.drawBoard(boardContext, board);
+  drawScore();
+  drawPlayer();
+  drawFood();
 }
 
-function inertiaSnake() {
+function drawScore() {
+  graphics.drawText(boardContext, { 
+    color: board.score.color, 
+    font: board.score.font, 
+    text: 'SCORE: ' + getScore(player.body.length), 
+    position: {
+      x: board.size.x * .02,
+      y: board.offset.y * .75 
+    }
+  });
+
+  graphics.drawText(boardContext, { 
+    color: board.score.color, 
+    font: board.score.font, 
+    text: 'RECORD: ' + board.score.record, 
+    position: {
+      x: board.size.x * .7,
+      y: board.offset.y * .75 
+    }
+  });
+}
+
+function drawPlayer() {
+  player.body.forEach(function(dot) {
+    graphics.drawRect(boardContext, { 
+      position: dot,
+      color: player.color,
+      size: player.size
+    }, 
+    board);
+  });
+}
+
+function drawFood() {
+  graphics.drawRect(boardContext, food, board);
+}
+
+function main() {
   head = nextHead(player);
   
   if(grow(food, head)) {
@@ -82,7 +110,7 @@ function reset() {
   player.body = [generateRandomPosition(board, player, [])];
   food.position = generateRandomPosition(board, food, player.body);
   
-  velocity = window.setInterval(inertiaSnake, board.speed);
+  velocity = window.setInterval(main, board.speed);
 }
 
 function setScore(board, player) {
@@ -148,30 +176,26 @@ function lose(body, head) {
 }
 
 function changeDirection(evt) {
+  var direction;
+
   switch(evt.keyCode) {
     case 119:
     case 38:
-      player.velocity.y = getVelocity(player.velocity.y, -player.size.y);
-      player.velocity.x = 0;
+      direction = 'up';
       break;
     case 100:
     case 39:
-      player.velocity.x = getVelocity(player.velocity.x, player.size.x);
-      player.velocity.y = 0;
+      direction = 'right';
       break;
     case 115:
     case 40:
-      player.velocity.y = getVelocity(player.velocity.y, player.size.y);
-      player.velocity.x = 0;
+      direction = 'down';
       break;
     case 97:
     case 37:
-      player.velocity.x = getVelocity(player.velocity.x, -player.size.x);
-      player.velocity.y = 0;
+      direction = 'left';
       break;
   }
-}
 
-function getVelocity(currentVelocity, newVelocity) {
-  return currentVelocity === 0 ? newVelocity : currentVelocity;
-} 
+  player.velocity = physics.changeDirection(player, direction);
+}
